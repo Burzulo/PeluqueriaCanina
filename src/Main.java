@@ -11,6 +11,8 @@ public class Main extends Application {
 		Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));
 		primaryStage.setTitle("Login"); // AGREGAR IMAGEN EN MINIATURA
 		primaryStage.setScene(new Scene(root, 600, 500));
+		primaryStage.setResizable(false); // No permite cambiar el tamaño
+		primaryStage.centerOnScreen(); // Centrar la ventana en pantalla
 		primaryStage.show();
 	}
 

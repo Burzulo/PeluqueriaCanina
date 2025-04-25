@@ -9,9 +9,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
-public class CargaDatosController {
+public class ActualizarFichaController {
 
-	public void guardarDatos(ActionEvent event) {
+	@FXML
+	private ComboBox<String> cmbSexo;
+
+	@FXML
+	private ComboBox<String> cmbEsterilizado;
+
+	@FXML
+	public void initialize() {
+		cmbSexo.getItems().addAll("Macho", "Hembra");
+		cmbEsterilizado.getItems().addAll("Si", "No");
+	}
+
+	public void guardarActu(ActionEvent event) {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/View/FichaMascota.fxml"));
 			Scene scene = new Scene(root);
@@ -28,15 +40,5 @@ public class CargaDatosController {
 		}
 	}
 
-	@FXML
-	private ComboBox<String> cmbSexo;
-
-	@FXML
-	public void initialize() {
-		cmbSexo.getItems().addAll("Macho", "Hembra");
-	}
 
 }
-
-
-

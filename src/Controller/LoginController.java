@@ -1,27 +1,30 @@
 package Controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
 
-public class LoginController implements Initializable {
+public class LoginController {
 
-	@FXML
-	private Button btnLogin;
+	public void irAPrincipal(ActionEvent event) {
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource("/View/Principal.fxml"));
+			Scene scene = new Scene(root);
 
-	public void handleButtonAction(ActionEvent event) {
-		System.out.println("Iniciar sesión");
-	}
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println("Inicializa LC");
-		btnLogin.setOnAction(this::handleButtonAction);
-
+			// Obtener la ventana actual y cambiarle la escena
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.setTitle("Principal");
+			stage.setScene(scene);
+			stage.setResizable(false); // No cambia el tamaño
+			stage.sizeToScene(); // Ajusta tamaño de ventana
+			stage.centerOnScreen(); // Centra ventana en pantalla
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

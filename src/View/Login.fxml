@@ -12,20 +12,20 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
 	<children>
-		<Pane prefHeight="80" prefWidth="600.0" style="-fx-background-color: #60d7fa;">
+		<Pane prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #15aeca;">
 			<children>
-				<Label layoutX="208.0" layoutY="18.0" text="Iniciar sesión">
+				<Label layoutX="219.0" layoutY="19.0" text="Iniciar Sesión" textFill="#3c3939">
 					<font>
-						<Font name="System Bold" size="30.0" />
+						<Font name="Cambria Math" size="28.0" />
 					</font>
 				</Label>
 			</children>
 		</Pane>
-		<Pane layoutY="80.0" prefHeight="320.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+		<Pane layoutY="70.0" prefHeight="332.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
 		<children>
         <ImageView fx:id="ViewLogo" fitHeight="111.0" fitWidth="123.0" layoutX="239.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../img/Logo.png" />
+                  <Image url="@../../bin/Logo.png" />
                </image></ImageView>
 				<Label layoutX="88.0" layoutY="157.0" text="Usuario">
 					<font>
@@ -39,7 +39,7 @@
 				</Label>
 				<PasswordField layoutX="177.0" layoutY="200.0" prefHeight="25.0" prefWidth="239.0" />
 				<TextField layoutX="177.0" layoutY="159.0" prefHeight="25.0" prefWidth="239.0" />
-				<Button fx:id="btnLogin" layoutX="277.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-cursor: hand;" text="Login" />
+				<Button fx:id="btnLogin" layoutX="277.0" layoutY="256.0" mnemonicParsing="false" onAction="#irAPrincipal" style="-fx-cursor: hand;" text="Login" />
 			</children>
 		</Pane>
 	</children>

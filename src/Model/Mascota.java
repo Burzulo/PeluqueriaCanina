@@ -10,14 +10,12 @@ public class Mascota {
 	private String sexo;
 	private String raza;
 	private String color;
-	private String observaciones;
 
 	public Mascota() {
 		super();
 	}
 
-	public Mascota(int idCliente, String nombreCliente, LocalDate fechaNac, String sexo, String raza, String color,
-			String observaciones) {
+	public Mascota(int idCliente, String nombreCliente, LocalDate fechaNac, String sexo, String raza, String color) {
 		super();
 		this.idCliente = idCliente;
 		this.nombreCliente = nombreCliente;
@@ -25,7 +23,6 @@ public class Mascota {
 		this.sexo = sexo;
 		this.raza = raza;
 		this.color = color;
-		this.observaciones = observaciones;
 	}
 
 	public int getIdCliente() {
@@ -74,14 +71,6 @@ public class Mascota {
 
 	public void setColor(String color) {
 		this.color = color;
-	}
-
-	public String getObservaciones() {
-		return observaciones;
-	}
-
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
 	}
 
 }

@@ -8,25 +8,25 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="peluqueriacanina.logica.PrincipalController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PrincipalController">
    <children>
-      <Pane prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #60d7fa;">
+      <Pane prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #15aeca;">
          <children>
-            <Label layoutX="198.0" layoutY="23.0" text="Peluquería Canina">
+            <Label layoutX="191.0" layoutY="20.0" text="Peluquería Canina">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="Cambria Math" size="28.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <Pane layoutY="80.0" prefHeight="320.0" prefWidth="600.0">
+      <Pane layoutY="70.0" prefHeight="320.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
          <children>
-            <Button fx:id="btnNuevoCliente" layoutX="84.0" layoutY="67.0" mnemonicParsing="false" onAction="#abrirNuevoCliente" prefHeight="42.0" prefWidth="145.0" text="Nuevo Cliente" />
-            <Button fx:id="btnVerCliente" layoutX="84.0" layoutY="128.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="145.0" text="Ver Cliente" />
-            <Button fx:id="btnSalir" layoutX="83.0" layoutY="189.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="145.0" text="Salir" />
-            <ImageView fitHeight="207.0" fitWidth="296.0" layoutX="306.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+            <Button fx:id="btnNuevaMascota" layoutX="84.0" layoutY="67.0" mnemonicParsing="false" onAction="#IrANuevaMascota" prefHeight="42.0" prefWidth="145.0" text="Nueva Mascota" />
+            <Button fx:id="btnVerMascota" layoutX="84.0" layoutY="128.0" mnemonicParsing="false" onAction="#VerMascota" prefHeight="42.0" prefWidth="145.0" text="Ver Mascota" />
+            <Button fx:id="btnSalir" layoutX="83.0" layoutY="189.0" mnemonicParsing="false" onAction="#salirPrincipal" prefHeight="42.0" prefWidth="145.0" text="Salir" />
+            <ImageView fitHeight="207.0" fitWidth="281.0" layoutX="306.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../Desktop/Proyecto%20final/PerroDuchaSinFondo3.png" />
+                  <Image url="@../../bin/PerroDuchaSinFondo3.png" />
                </image>
             </ImageView>
          </children>
