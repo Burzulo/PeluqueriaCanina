@@ -1,20 +1,35 @@
 package Model;
 
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Duenio")
 public class Duenio {
 
-	private int idDuenio;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id_duenio;
+	
 	private String nombre;
-	private int telefono;
+	private String telefono;
 	private String email;
 	private String direccion;
 
+	@OneToMany(mappedBy = "unDuenio")  // Relación inversa con Mascota
+    private List<Mascota> mascotas;
+	
 	public Duenio() {
-		super();
 	}
 
-	public Duenio(int idDuenio, String nombre, int telefono, String email, String direccion) {
-		super();
-		this.idDuenio = idDuenio;
+	public Duenio(int id_duenio, String nombre, String telefono, String email, String direccion) {
+		this.id_duenio = id_duenio;
 		this.nombre = nombre;
 		this.telefono = telefono;
 		this.email = email;
@@ -22,11 +37,11 @@ public class Duenio {
 	}
 
 	public int getIdDuenio() {
-		return idDuenio;
+		return id_duenio;
 	}
 
-	public void setIdDuenio(int idDuenio) {
-		this.idDuenio = idDuenio;
+	public void setIdDuenio(int id_duenio) {
+		this.id_duenio = id_duenio;
 	}
 
 	public String getNombre() {
@@ -37,11 +52,11 @@ public class Duenio {
 		this.nombre = nombre;
 	}
 
-	public int getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(int telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 

@@ -1,3 +1,7 @@
+package app;
+
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,17 +11,16 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("View/Login.fxml"));
-		primaryStage.setTitle("Login"); // AGREGAR IMAGEN EN MINIATURA
+	public void start(Stage primaryStage) throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
+		primaryStage.setTitle("Login");
 		primaryStage.setScene(new Scene(root, 600, 500));
-		primaryStage.setResizable(false); // No permite cambiar el tamaño
-		primaryStage.centerOnScreen(); // Centrar la ventana en pantalla
+		primaryStage.setResizable(false);
+		primaryStage.centerOnScreen();
 		primaryStage.show();
 	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
-
 }

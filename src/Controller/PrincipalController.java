@@ -9,58 +9,60 @@ import javafx.stage.Stage;
 
 public class PrincipalController {
 
-	public void IrANuevaMascota(ActionEvent event) {
+	// -- BOTON NUEVA MASCOTA -->
+	public void irNuevaMascota(ActionEvent event) {
+
+		// -- CAMBIA DE INTERFAZ
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/View/CargaDatos.fxml"));
 			Scene scene = new Scene(root);
-
-			// Obtener la ventana actual y cambiar de escena
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			stage.setTitle("Cargar Nueva Mascota");
 			stage.setScene(scene);
-			stage.sizeToScene(); // Ajusta tamaño de ventana
-			stage.setResizable(false); // No cambiar el tamaño
-			stage.centerOnScreen(); // Centrar ventana en pantalla
+			stage.sizeToScene();
+			stage.setResizable(false);
+			stage.centerOnScreen();
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void VerMascota(ActionEvent event) {
+	// -- BOTON BUSCAR -->
+	public void buscarMascota(ActionEvent event) {
+
+		// -- CAMBIA DE INTERFAZ
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/View/FichaMascota.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/View/BuscarMascota.fxml"));
 			Scene scene = new Scene(root);
-
-			// Obtener la ventana actual y cambiar de escena
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			stage.setTitle("Ficha Mascota");
+			stage.setTitle("Buscar Mascota");
 			stage.setScene(scene);
-			stage.sizeToScene(); // Ajusta tamaño de ventana
-			stage.setResizable(false); // No cambiar el tamaño
-			stage.centerOnScreen(); // Centrar ventana en pantalla
+			stage.sizeToScene();
+			stage.setResizable(false);
+			stage.centerOnScreen();
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	// -- BOTON SALIR -->
 	public void salirPrincipal(ActionEvent event) {
+
+		// -- CAMBIA DE INTERFAZ
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
 			Scene scene = new Scene(root);
-
-			// Obtener la ventana actual y cambiar de escena
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			stage.setTitle("Principal");
+			stage.setTitle("Login");
 			stage.setScene(scene);
-			stage.sizeToScene(); // Ajusta tamaño de ventana
-			stage.setResizable(false); // No cambiar el tamaño
-			stage.centerOnScreen(); // Centrar ventana en pantalla
+			stage.sizeToScene();
+			stage.setResizable(false);
+			stage.centerOnScreen();
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 }

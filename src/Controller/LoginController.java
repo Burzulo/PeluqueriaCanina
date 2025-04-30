@@ -9,22 +9,22 @@ import javafx.scene.Node;
 
 public class LoginController {
 
+	// -- BOTON LOGIN -->
 	public void irAPrincipal(ActionEvent event) {
+
+		// -- CAMBIA DE INTERFAZ
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/View/Principal.fxml"));
 			Scene scene = new Scene(root);
-
-			// Obtener la ventana actual y cambiarle la escena
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			stage.setTitle("Principal");
 			stage.setScene(scene);
-			stage.setResizable(false); // No cambia el tamaño
-			stage.sizeToScene(); // Ajusta tamaño de ventana
-			stage.centerOnScreen(); // Centra ventana en pantalla
+			stage.setResizable(false);
+			stage.sizeToScene();
+			stage.centerOnScreen();
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 }

@@ -23,7 +23,7 @@
 		</Pane>
 		<Pane layoutY="70.0" prefHeight="332.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
 		<children>
-        <ImageView fx:id="ViewLogo" fitHeight="111.0" fitWidth="123.0" layoutX="239.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="ViewLogo" fitHeight="111.0" fitWidth="123.0" layoutX="239.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../bin/Logo.png" />
                </image></ImageView>
@@ -37,8 +37,8 @@
 						<Font size="18.0" />
 					</font>
 				</Label>
-				<PasswordField layoutX="177.0" layoutY="200.0" prefHeight="25.0" prefWidth="239.0" />
-				<TextField layoutX="177.0" layoutY="159.0" prefHeight="25.0" prefWidth="239.0" />
+				<PasswordField fx:id="passClave" layoutX="177.0" layoutY="200.0" prefHeight="25.0" prefWidth="239.0" />
+				<TextField fx:id="txtUsuario" layoutX="177.0" layoutY="159.0" prefHeight="25.0" prefWidth="239.0" />
 				<Button fx:id="btnLogin" layoutX="277.0" layoutY="256.0" mnemonicParsing="false" onAction="#irAPrincipal" style="-fx-cursor: hand;" text="Login" />
 			</children>
 		</Pane>

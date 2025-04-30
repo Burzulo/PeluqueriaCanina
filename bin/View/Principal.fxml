@@ -21,9 +21,9 @@
       </Pane>
       <Pane layoutY="70.0" prefHeight="320.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
          <children>
-            <Button fx:id="btnNuevaMascota" layoutX="84.0" layoutY="67.0" mnemonicParsing="false" onAction="#IrANuevaMascota" prefHeight="42.0" prefWidth="145.0" text="Nueva Mascota" />
-            <Button fx:id="btnVerMascota" layoutX="84.0" layoutY="128.0" mnemonicParsing="false" onAction="#VerMascota" prefHeight="42.0" prefWidth="145.0" text="Ver Mascota" />
-            <Button fx:id="btnSalir" layoutX="83.0" layoutY="189.0" mnemonicParsing="false" onAction="#salirPrincipal" prefHeight="42.0" prefWidth="145.0" text="Salir" />
+            <Button fx:id="btnNuevaMascota" layoutX="84.0" layoutY="67.0" mnemonicParsing="false" onAction="#irNuevaMascota" prefHeight="42.0" prefWidth="145.0" text="Nueva Mascota" />
+            <Button fx:id="btnBuscarMascota" layoutX="84.0" layoutY="128.0" mnemonicParsing="false" onAction="#buscarMascota" prefHeight="42.0" prefWidth="145.0" text="Buscar Mascota" />
+            <Button fx:id="btnSalirPrincipal" layoutX="83.0" layoutY="189.0" mnemonicParsing="false" onAction="#salirPrincipal" prefHeight="42.0" prefWidth="145.0" text="Salir" />
             <ImageView fitHeight="207.0" fitWidth="281.0" layoutX="306.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../bin/PerroDuchaSinFondo3.png" />
