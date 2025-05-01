@@ -27,15 +27,17 @@ public class BuscarMascotaController {
 
 	private List<Mascota> mascotasEncontradas;
 
+	// -- BOTON BUSCAR MASCOTA -->
 	@FXML
-	private void buscarMascotas() {
+	private void buscarMascota() {
 		String nombre = txtNombreMascota.getText().trim();
 
 		if (nombre.isEmpty()) {
-			mostrarAlerta("Por favor, ingresa un nombre para buscar.");
+			mostrarAlerta("Por favor, ingrese un nombre para buscar la mascota.");
 			return;
 		}
 
+		// CONSULTA A BD PARA BUSCAR NOMBRES DE MASCOTA
 		EntityManager em = JPAUtil.getEntityManager();
 		TypedQuery<Mascota> query = em
 				.createQuery("SELECT m FROM Mascota m WHERE LOWER(m.nombreMascota) = LOWER(:nombre)", Mascota.class);
@@ -44,20 +46,23 @@ public class BuscarMascotaController {
 		mascotasEncontradas = query.getResultList();
 		em.close();
 
+		// PROCESA Y FILTRA LA LISTA DE MASCOTAS
 		ObservableList<String> resultados = FXCollections.observableArrayList();
 		for (Mascota m : mascotasEncontradas) {
 			String duenio = (m.getUnDuenio() != null) ? m.getUnDuenio().getNombre() : "Sin dueño";
-			resultados.add("ID: " + m.getIdCliente() + " - " + m.getNombreMascota() + " (Dueño: " + duenio + ")");
+			resultados.add("ID: " + m.getIdMascota() + " - " + m.getNombreMascota() + " (Dueño: " + duenio + ")");
 		}
 
+		// MUESTRA RESULTADO EN INTERFAZ GRAFICA
 		listaResultados.setItems(resultados);
 	}
 
+	// -- BOTON VER FICHA DE MASCOTA -->  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! COMENTAR !!!!!!!!!!!!!!
 	@FXML
 	private void verFichaMascota() {
 		int index = listaResultados.getSelectionModel().getSelectedIndex();
 		if (index >= 0 && index < mascotasEncontradas.size()) {
-			int idMascota = mascotasEncontradas.get(index).getIdCliente();
+			int idMascota = mascotasEncontradas.get(index).getIdMascota();
 
 			try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FichaMascota.fxml"));
@@ -65,12 +70,13 @@ public class BuscarMascotaController {
 
 				FichaMascotaController controller = loader.getController();
 				controller.cargarDatos(idMascota);
-
+				
 				Stage stage = new Stage();
 				stage.setTitle("Ficha Mascota");
 				stage.setScene(new Scene(root));
 				stage.setResizable(false);
 				stage.centerOnScreen();
+				stage.setOnCloseRequest(evt -> evt.consume());
 				stage.show();
 
 				// Cerrar esta ventana
@@ -85,7 +91,7 @@ public class BuscarMascotaController {
 
 	// -- BOTON SALIR -->
 	public void salirPrincipal(ActionEvent event) {
-		
+
 		// -- CAMBIA DE INTERFAZ
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/View/Principal.fxml"));
@@ -96,6 +102,7 @@ public class BuscarMascotaController {
 			stage.sizeToScene();
 			stage.setResizable(false);
 			stage.centerOnScreen();
+			stage.setOnCloseRequest(evt -> evt.consume());
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

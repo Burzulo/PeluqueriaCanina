@@ -22,6 +22,7 @@ public class PrincipalController {
 			stage.sizeToScene();
 			stage.setResizable(false);
 			stage.centerOnScreen();
+			stage.setOnCloseRequest(evt -> evt.consume());
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,6 +42,7 @@ public class PrincipalController {
 			stage.sizeToScene();
 			stage.setResizable(false);
 			stage.centerOnScreen();
+			stage.setOnCloseRequest(evt -> evt.consume());
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,6 +62,9 @@ public class PrincipalController {
 			stage.sizeToScene();
 			stage.setResizable(false);
 			stage.centerOnScreen();
+			if (stage.getOnCloseRequest() != null) {
+	            stage.setOnCloseRequest(null);
+	        }
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

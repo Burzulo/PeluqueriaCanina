@@ -22,6 +22,7 @@ public class LoginController {
 			stage.setResizable(false);
 			stage.sizeToScene();
 			stage.centerOnScreen();
+			stage.setOnCloseRequest(evt -> evt.consume());
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

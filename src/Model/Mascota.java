@@ -33,7 +33,7 @@ public class Mascota {
 
 	public Mascota(int id_mascota, String nombreMascota, LocalDate fecha_nacimiento, LocalDate ultima_visita,
 			String sexo, String raza, String color, String esterilizado, String alergia, String medicacion,
-			String cirugia, double pesoActual, Duenio unDuenio) {
+			String cirugia, Double pesoActual, Duenio unDuenio) {
 		this.id_mascota = id_mascota;
 		this.nombreMascota = nombreMascota;
 		this.fecha_nacimiento = fecha_nacimiento;
@@ -49,11 +49,11 @@ public class Mascota {
 		this.unDuenio = unDuenio;
 	}
 
-	public int getIdCliente() {
+	public int getIdMascota() {
 		return id_mascota;
 	}
 
-	public void setIdCliente(int id_mascota) {
+	public void setIdMascota(int id_mascota) {
 		this.id_mascota = id_mascota;
 	}
 
@@ -137,7 +137,7 @@ public class Mascota {
 		this.cirugia = cirugia;
 	}
 
-	public double getPesoActual() {
+	public Double getPesoActual() {
 		return pesoActual;
 	}
 

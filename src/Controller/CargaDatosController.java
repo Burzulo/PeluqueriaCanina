@@ -115,7 +115,10 @@ public class CargaDatosController {
 			mascota.setUltimaVisita(dpUltimaVisita.getValue());
 			mascota.setSexo(cmbSexo.getValue());
 			mascota.setEsterilizado(cmbEsterilizado.getValue());
-			mascota.setRaza(txtRaza.getText().trim());
+			String raza = txtRaza.getText();
+			mascota.setRaza((raza != null && !raza.isBlank()) ? raza.trim() : null);
+			String color = txtColor.getText();
+			mascota.setColor((color != null && !color.isBlank()) ? color.trim() : null);
 			mascota.setPesoActual(peso);
 			mascota.setUnDuenio(duenio);
 
@@ -133,6 +136,7 @@ public class CargaDatosController {
 		} finally {
 			em.close();
 		}
+
 	}
 
 	// -- BOTON SALIR -->
@@ -145,6 +149,7 @@ public class CargaDatosController {
 			stage.setScene(scene);
 			stage.setResizable(false);
 			stage.centerOnScreen();
+			stage.setOnCloseRequest(evt -> evt.consume());
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

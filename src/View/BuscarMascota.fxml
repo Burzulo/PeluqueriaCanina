@@ -30,12 +30,12 @@
          <children>
             <ListView fx:id="listaResultados" layoutX="80.0" layoutY="76.0" prefHeight="157.0" prefWidth="434.0" />
             <Button layoutX="314.0" layoutY="260.0" mnemonicParsing="false" onAction="#salirPrincipal" prefHeight="31.0" prefWidth="72.0" text="Salir" />
-            <Button layoutX="209.0" layoutY="260.0" mnemonicParsing="false" onAction="#verFichaMascota" prefHeight="31.0" prefWidth="85.0" text="Ver Ficha" />
+            <Button fx:id="btnVerFicha" layoutX="209.0" layoutY="260.0" mnemonicParsing="false" onAction="#verFichaMascota" prefHeight="31.0" prefWidth="85.0" text="Ver Ficha" />
             <Label layoutX="80.0" layoutY="21.0" text="Nombre Mascota:">
                <font>
                   <Font size="14.0" />
                </font></Label>
-            <Button layoutX="436.0" layoutY="17.0" mnemonicParsing="false" onAction="#buscarMascotas" prefHeight="30.0" prefWidth="78.0" text="Buscar" />
+            <Button layoutX="436.0" layoutY="17.0" mnemonicParsing="false" onAction="#buscarMascota" prefHeight="30.0" prefWidth="78.0" text="Buscar" />
             <TextField fx:id="txtNombreMascota" layoutX="200.0" layoutY="17.0" prefHeight="30.0" prefWidth="224.0">
                <font>
                   <Font size="14.0" />
