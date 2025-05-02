@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="185.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
 	<children>
 		<Pane prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #15aeca;">
 			<children>
@@ -21,25 +21,25 @@
 				</Label>
 			</children>
 		</Pane>
-		<Pane layoutY="70.0" prefHeight="332.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+		<Pane layoutY="70.0" prefHeight="279.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
 		<children>
-        <ImageView fx:id="ViewLogo" fitHeight="111.0" fitWidth="123.0" layoutX="239.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="ViewLogo" fitHeight="99.0" fitWidth="111.0" layoutX="239.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../bin/Logo.png" />
                </image></ImageView>
-				<Label layoutX="88.0" layoutY="157.0" text="Usuario">
+				<Label layoutX="88.0" layoutY="130.0" text="Usuario">
 					<font>
 						<Font size="18.0" />
 					</font>
 				</Label>
-				<Label layoutX="106.0" layoutY="198.0" text="Clave">
+				<Label layoutX="106.0" layoutY="171.0" text="Clave">
 					<font>
 						<Font size="18.0" />
 					</font>
 				</Label>
-				<PasswordField fx:id="passClave" layoutX="177.0" layoutY="200.0" prefHeight="25.0" prefWidth="239.0" />
-				<TextField fx:id="txtUsuario" layoutX="177.0" layoutY="159.0" prefHeight="25.0" prefWidth="239.0" />
-				<Button fx:id="btnLogin" layoutX="277.0" layoutY="256.0" mnemonicParsing="false" onAction="#irAPrincipal" style="-fx-cursor: hand;" text="Login" />
+				<PasswordField fx:id="passClave" layoutX="177.0" layoutY="173.0" prefHeight="25.0" prefWidth="239.0" />
+				<TextField fx:id="txtUsuario" layoutX="177.0" layoutY="132.0" prefHeight="25.0" prefWidth="239.0" />
+				<Button fx:id="btnLogin" layoutX="277.0" layoutY="229.0" mnemonicParsing="false" onAction="#irAPrincipal" style="-fx-cursor: hand;" text="Login" />
 			</children>
 		</Pane>
 	</children>

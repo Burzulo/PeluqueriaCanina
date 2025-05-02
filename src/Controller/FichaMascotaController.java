@@ -77,9 +77,9 @@ public class FichaMascotaController {
 	        stage.setTitle("Actualizar Ficha");
 	        stage.setScene(scene);
 	        stage.setResizable(false);
-	        stage.centerOnScreen();
 	        stage.setOnCloseRequest(evt -> evt.consume());
 	        stage.show();
+	        stage.centerOnScreen();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
@@ -94,9 +94,9 @@ public class FichaMascotaController {
 			stage.setTitle("Principal");
 			stage.setScene(scene);
 			stage.setResizable(false);
-			stage.centerOnScreen();
 			stage.setOnCloseRequest(evt -> evt.consume());
 			stage.show();
+			stage.centerOnScreen();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

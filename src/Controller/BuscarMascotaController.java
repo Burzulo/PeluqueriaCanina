@@ -27,7 +27,6 @@ public class BuscarMascotaController {
 
 	private List<Mascota> mascotasEncontradas;
 
-	// -- BOTON BUSCAR MASCOTA -->
 	@FXML
 	private void buscarMascota() {
 		String nombre = txtNombreMascota.getText().trim();
@@ -39,12 +38,18 @@ public class BuscarMascotaController {
 
 		// CONSULTA A BD PARA BUSCAR NOMBRES DE MASCOTA
 		EntityManager em = JPAUtil.getEntityManager();
-		TypedQuery<Mascota> query = em
-				.createQuery("SELECT m FROM Mascota m WHERE LOWER(m.nombreMascota) = LOWER(:nombre)", Mascota.class);
+		TypedQuery<Mascota> query = em.createQuery(
+			"SELECT m FROM Mascota m WHERE LOWER(m.nombreMascota) = LOWER(:nombre)", Mascota.class);
 		query.setParameter("nombre", nombre);
 
-		mascotasEncontradas = query.getResultList();
+		List<Mascota> mascotasEncontradas = query.getResultList();
 		em.close();
+
+		if (mascotasEncontradas.isEmpty()) {
+			mostrarAlerta("No se encontró ninguna mascota con el nombre ingresado.");
+			listaResultados.getItems().clear();
+			return;
+		}
 
 		// PROCESA Y FILTRA LA LISTA DE MASCOTAS
 		ObservableList<String> resultados = FXCollections.observableArrayList();
@@ -56,6 +61,7 @@ public class BuscarMascotaController {
 		// MUESTRA RESULTADO EN INTERFAZ GRAFICA
 		listaResultados.setItems(resultados);
 	}
+
 
 	// -- BOTON VER FICHA DE MASCOTA -->  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! COMENTAR !!!!!!!!!!!!!!
 	@FXML
@@ -75,9 +81,9 @@ public class BuscarMascotaController {
 				stage.setTitle("Ficha Mascota");
 				stage.setScene(new Scene(root));
 				stage.setResizable(false);
-				stage.centerOnScreen();
 				stage.setOnCloseRequest(evt -> evt.consume());
 				stage.show();
+				stage.centerOnScreen();
 
 				// Cerrar esta ventana
 				((Stage) listaResultados.getScene().getWindow()).close();
@@ -101,9 +107,10 @@ public class BuscarMascotaController {
 			stage.setScene(scene);
 			stage.sizeToScene();
 			stage.setResizable(false);
-			stage.centerOnScreen();
 			stage.setOnCloseRequest(evt -> evt.consume());
 			stage.show();
+			stage.centerOnScreen();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

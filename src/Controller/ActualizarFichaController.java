@@ -137,6 +137,7 @@ public class ActualizarFichaController {
 			stage.centerOnScreen();
 			stage.setOnCloseRequest(evt -> evt.consume());
 			stage.show();
+			stage.centerOnScreen();
 
 		} catch (Exception e) {
 			e.printStackTrace();

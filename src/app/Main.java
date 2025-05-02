@@ -14,10 +14,10 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
 		primaryStage.setTitle("Login");
-		primaryStage.setScene(new Scene(root, 600, 500));
+		primaryStage.setScene(new Scene(root, 600, 400));
 		primaryStage.setResizable(false);
-		primaryStage.centerOnScreen();
 		primaryStage.show();
+		primaryStage.centerOnScreen();
 	}
 
 	public static void main(String[] args) {
