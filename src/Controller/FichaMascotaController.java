@@ -21,13 +21,14 @@ public class FichaMascotaController {
     @FXML
     private Label lblFechaNacimiento, lblUltimaVisita, lblSexo, lblRaza, lblColor,
                   lblEsterilizado, lblAlergia, lblMedicacion, lblCirugia, lblPesoActual;
+ 
+    // -- DUEÑO -->
     @FXML
     private Label lblNombreDuenio, lblTelefono, lblEmail, lblDireccion;
     
     private int idMascotaActual;
 	
-	// !!!!
- // Método que recibe el id de la mascota y carga los datos
+ // -- METODO ID MASCOTA Y CARGA SUS DATOS -->
     public void cargarDatos(int idMascota) {
         this.idMascotaActual = idMascota;
 
@@ -59,19 +60,19 @@ public class FichaMascotaController {
     }
 
 
-	// !!!!
+ // -- BOTON ACTUALIZACION DE DATOS -->
 	public void actualizarDatos(ActionEvent event) {
-	    try {
+
+		// -- CAMBIA DE INTERFAZ
+		try {
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ActualizarFicha.fxml"));
 	        Parent root = loader.load();
 	        
-	        // Obtener el controlador de la nueva ventana
 	        ActualizarFichaController actualizarController = loader.getController();
 	        
-	        // Pasar el idMascotaActual al controlador de la nueva ventana
+	        // -- PASAR ID A CONTROLADOR DE NUEVA VENTANA
 	        actualizarController.cargarDatos(idMascotaActual);
 
-	        // Configurar la nueva ventana
 	        Scene scene = new Scene(root);
 	        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 	        stage.setTitle("Actualizar Ficha");
@@ -85,8 +86,10 @@ public class FichaMascotaController {
 	    }
 	}
 
-	// !!!!
+	// -- BOTON SALIR -->
 	public void salirFicha(ActionEvent event) {
+
+		// -- CAMBIA DE INTERFAZ
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/View/Principal.fxml"));
 			Scene scene = new Scene(root);

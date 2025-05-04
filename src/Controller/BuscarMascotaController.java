@@ -27,6 +27,7 @@ public class BuscarMascotaController {
 
 	private List<Mascota> mascotasEncontradas;
 
+	// -- BOTON BUSCAR MASCOTA -->
 	@FXML
 	private void buscarMascota() {
 		String nombre = txtNombreMascota.getText().trim();
@@ -36,36 +37,46 @@ public class BuscarMascotaController {
 			return;
 		}
 
-		// CONSULTA A BD PARA BUSCAR NOMBRES DE MASCOTA
-		EntityManager em = JPAUtil.getEntityManager();
-		TypedQuery<Mascota> query = em.createQuery(
-			"SELECT m FROM Mascota m WHERE LOWER(m.nombreMascota) = LOWER(:nombre)", Mascota.class);
-		query.setParameter("nombre", nombre);
+		// -- CONSULTA A BD PARA BUSCAR NOMBRES DE MASCOTA
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			TypedQuery<Mascota> query = em.createQuery(
+					"SELECT m FROM Mascota m WHERE LOWER(m.nombreMascota) = LOWER(:nombre)", Mascota.class);
+			query.setParameter("nombre", nombre);
 
-		List<Mascota> mascotasEncontradas = query.getResultList();
-		em.close();
+			mascotasEncontradas = query.getResultList();
+			em.close();
 
-		if (mascotasEncontradas.isEmpty()) {
-			mostrarAlerta("No se encontró ninguna mascota con el nombre ingresado.");
-			listaResultados.getItems().clear();
+			if (mascotasEncontradas.isEmpty()) {
+				mostrarAlerta("No se encontró ninguna mascota con el nombre ingresado.");
+				listaResultados.getItems().clear();
+				return;
+			}
+
+			// -- PROCESA Y FILTRA LA LISTA DE MASCOTAS
+			ObservableList<String> resultados = FXCollections.observableArrayList();
+			for (Mascota m : mascotasEncontradas) {
+				String duenio = (m.getUnDuenio() != null) ? m.getUnDuenio().getNombre() : "Sin dueño";
+				resultados.add("ID: " + m.getIdMascota() + " - " + m.getNombreMascota() + " (Dueño: " + duenio + ")");
+			}
+
+			// -- MUESTRA RESULTADO EN INTERFAZ GRAFICA
+			listaResultados.setItems(resultados);
+
+		} catch (Exception e) {
+			mostrarAlerta("Error al buscar en la base de datos: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	// -- BOTON VER FICHA DE MASCOTA -->
+	@FXML
+	private void verFichaMascota() {
+		if (mascotasEncontradas == null || mascotasEncontradas.isEmpty()) {
+			mostrarAlerta("Primero debe realizar una búsqueda y seleccionar una mascota.");
 			return;
 		}
 
-		// PROCESA Y FILTRA LA LISTA DE MASCOTAS
-		ObservableList<String> resultados = FXCollections.observableArrayList();
-		for (Mascota m : mascotasEncontradas) {
-			String duenio = (m.getUnDuenio() != null) ? m.getUnDuenio().getNombre() : "Sin dueño";
-			resultados.add("ID: " + m.getIdMascota() + " - " + m.getNombreMascota() + " (Dueño: " + duenio + ")");
-		}
-
-		// MUESTRA RESULTADO EN INTERFAZ GRAFICA
-		listaResultados.setItems(resultados);
-	}
-
-
-	// -- BOTON VER FICHA DE MASCOTA -->  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! COMENTAR !!!!!!!!!!!!!!
-	@FXML
-	private void verFichaMascota() {
 		int index = listaResultados.getSelectionModel().getSelectedIndex();
 		if (index >= 0 && index < mascotasEncontradas.size()) {
 			int idMascota = mascotasEncontradas.get(index).getIdMascota();
@@ -76,7 +87,7 @@ public class BuscarMascotaController {
 
 				FichaMascotaController controller = loader.getController();
 				controller.cargarDatos(idMascota);
-				
+
 				Stage stage = new Stage();
 				stage.setTitle("Ficha Mascota");
 				stage.setScene(new Scene(root));
@@ -85,15 +96,16 @@ public class BuscarMascotaController {
 				stage.show();
 				stage.centerOnScreen();
 
-				// Cerrar esta ventana
 				((Stage) listaResultados.getScene().getWindow()).close();
 			} catch (Exception e) {
 				e.printStackTrace();
+				mostrarAlerta("Error al cargar la ficha de la mascota.");
 			}
 		} else {
 			mostrarAlerta("Selecciona una mascota de la lista.");
 		}
 	}
+
 
 	// -- BOTON SALIR -->
 	public void salirPrincipal(ActionEvent event) {

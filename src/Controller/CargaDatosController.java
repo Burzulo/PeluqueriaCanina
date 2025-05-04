@@ -141,6 +141,8 @@ public class CargaDatosController {
 
 	// -- BOTON SALIR -->
 	public void salirNuevaMascota(ActionEvent event) {
+
+		// -- CAMBIA DE INTERFAZ
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/View/Principal.fxml"));
 			Scene scene = new Scene(root);

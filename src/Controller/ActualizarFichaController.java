@@ -34,6 +34,7 @@ public class ActualizarFichaController {
 	@FXML
 	private TextArea txtDireccion;
 
+	// -- OPCIONES DEL COMBOBOX -->
 	@FXML
 	public void initialize() {
 		cmbSexo.getItems().addAll("Macho", "Hembra");
@@ -77,11 +78,12 @@ public class ActualizarFichaController {
 		try {
 			em.getTransaction().begin();
 
-			// Buscar la mascota en la base de datos
+			// BUSCA LA MASCOTA EN BD
 			Mascota mascota = em.find(Mascota.class, idMascotaActual);
 
 			if (mascota != null) {
-				// Actualizar los valores si no son nulos ni vacíos
+				
+				// ACTUALIZA LOS VALORES DE BD
 				if (dpFechaNacimiento.getValue() != null) {
 					mascota.setFechaNacimiento(dpFechaNacimiento.getValue());
 				}
@@ -117,19 +119,18 @@ public class ActualizarFichaController {
 					}
 				}
 
-				// Guardar los cambios en la base de datos
+				// GUARDA LOS CAMBIOS EN BD
 				em.merge(mascota);
 				em.getTransaction().commit();
 			}
 
-			// Cargar la ventana FichaMascota después de actualizar
+			// -- CAMBIA DE INTERFAZ
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FichaMascota.fxml"));
 			Parent root = loader.load();
 
 			FichaMascotaController fichaController = loader.getController();
 			fichaController.cargarDatos(idMascotaActual);
 
-			// Configurar la nueva ventana
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			stage.setScene(new Scene(root));
 			stage.setTitle("Ficha Mascota");
