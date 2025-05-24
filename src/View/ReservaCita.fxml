@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="571.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReservaCitaController">
+   <children>
+      <Pane prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #4acacd;">
+         <children>
+            <Label layoutX="219.0" layoutY="20.0" prefHeight="31.0" prefWidth="162.0" text="Reservar Cita" textAlignment="CENTER">
+               <font>
+                  <Font name="Cambria Math" size="28.0" />
+               </font>
+               <rotationAxis>
+                  <Point3D />
+               </rotationAxis>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutY="70.0" prefHeight="522.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Label fx:id="lblNombreDuenio" layoutX="110.0" layoutY="77.0" prefHeight="20.0" prefWidth="213.0" text="Mascota de ID Duenio">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnReservaNuevaCita" layoutX="198.0" layoutY="462.0" mnemonicParsing="false" onAction="#reservaNuevaCita" prefHeight="25.0" prefWidth="95.0" text="Reservar Cita" />
+            <Button fx:id="btnSalir" layoutX="305.0" layoutY="462.0" mnemonicParsing="false" onAction="#salirReserva" prefHeight="25.0" prefWidth="95.0" text="Salir" />
+            <Label fx:id="lblUltimaVisita" layoutX="37.0" layoutY="152.0" text="Fecha de la Cita">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="dpFechaCita" layoutX="158.0" layoutY="149.0" prefHeight="26.0" prefWidth="206.0" />
+            <ImageView fx:id="ViewMascota1" fitHeight="52.0" fitWidth="58.0" layoutX="37.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../bin/FichaMascota.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblHistoriaClinica" layoutX="492.0" layoutY="50.0" prefHeight="24.0" prefWidth="77.0" text="HC #200">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblNombreMascota" layoutX="109.0" layoutY="47.0" prefHeight="30.0" prefWidth="233.0" text="Nombre Mascota">
+               <font>
+                  <Font name="Cambria Math" size="27.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblObservaciones" layoutX="37.0" layoutY="232.0" prefHeight="20.0" prefWidth="105.0" text="Observaciones:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtObservaciones" alignment="TOP_LEFT" layoutX="37.0" layoutY="259.0" prefHeight="174.0" prefWidth="532.0" />
+            <Label fx:id="lblMotivoCita" layoutX="37.0" layoutY="192.0" text="Motivo de la Cita">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cmbMotivoCita" layoutX="158.0" layoutY="191.0" prefHeight="25.0" prefWidth="206.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -1,13 +1,17 @@
 package Model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,33 +20,36 @@ public class Mascota {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_mascota;
+	private int idMascota;
 
 	private String nombreMascota;
-	private LocalDate fecha_nacimiento, ultima_visita;
+	private LocalDate fecha_nacimiento;
 	private String sexo, raza, color;
-	private String esterilizado, alergia, medicacion, cirugia;
+	private String esterilizado, alergia, medicacion, cirugia, observaciones;
 	private Double pesoActual;
 
 	@ManyToOne
 	@JoinColumn(name = "id_duenio")
 	private Duenio unDuenio;
 
+	@OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL)
+	private List<Cita> historial = new ArrayList<>();
+
 	public Mascota() {
 	}
 
-	public Mascota(int id_mascota, String nombreMascota, LocalDate fecha_nacimiento, LocalDate ultima_visita,
-			String sexo, String raza, String color, String esterilizado, String alergia, String medicacion,
-			String cirugia, Double pesoActual, Duenio unDuenio) {
-		this.id_mascota = id_mascota;
+	public Mascota(int idMascota, String nombreMascota, LocalDate fecha_nacimiento, String sexo, String raza,
+			String color, String esterilizado, String alergia, String medicacion, String cirugia, String observaciones,
+			Double pesoActual, Duenio unDuenio) {
+		this.idMascota = idMascota;
 		this.nombreMascota = nombreMascota;
 		this.fecha_nacimiento = fecha_nacimiento;
-		this.ultima_visita = ultima_visita;
 		this.sexo = sexo;
 		this.raza = raza;
 		this.color = color;
 		this.esterilizado = esterilizado;
 		this.alergia = alergia;
+		this.observaciones = observaciones;
 		this.medicacion = medicacion;
 		this.cirugia = cirugia;
 		this.pesoActual = pesoActual;
@@ -50,11 +57,11 @@ public class Mascota {
 	}
 
 	public int getIdMascota() {
-		return id_mascota;
+		return idMascota;
 	}
 
-	public void setIdMascota(int id_mascota) {
-		this.id_mascota = id_mascota;
+	public void setIdMascota(int idMascota) {
+		this.idMascota = idMascota;
 	}
 
 	public String getNombreMascota() {
@@ -71,14 +78,6 @@ public class Mascota {
 
 	public void setFechaNacimiento(LocalDate fecha_nacimiento) {
 		this.fecha_nacimiento = fecha_nacimiento;
-	}
-
-	public LocalDate getUltimaVisita() {
-		return ultima_visita;
-	}
-
-	public void setUltimaVisita(LocalDate ultima_visita) {
-		this.ultima_visita = ultima_visita;
 	}
 
 	public String getSexo() {
@@ -137,6 +136,14 @@ public class Mascota {
 		this.cirugia = cirugia;
 	}
 
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
 	public Double getPesoActual() {
 		return pesoActual;
 	}
@@ -151,6 +158,24 @@ public class Mascota {
 
 	public void setUnDuenio(Duenio unDuenio) {
 		this.unDuenio = unDuenio;
+	}
+
+	public List<Cita> getHistorial() {
+		return historial;
+	}
+
+	public void setHistorial(List<Cita> historial) {
+		this.historial = historial;
+	}
+
+	public void addHistorial(Cita h) {
+	    historial.add(h);
+	    h.setMascota(this); // sincroniza la relación bidireccional
+	}
+
+	@Override
+	public String toString() {
+	    return nombreMascota;
 	}
 
 }

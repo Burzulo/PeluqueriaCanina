@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 public class CargaDatosController {
 
-	// -- MASCOTA -->
+	// -- MASCOTA >>>>>>
 	@FXML
 	private TextField txtNombreMascota, txtRaza, txtColor, txtPesoActual;
 	@FXML
@@ -31,31 +31,31 @@ public class CargaDatosController {
 	@FXML
 	private ComboBox<String> cmbSexo, cmbEsterilizado;
 
-	// -- DUEÑO -->
+	// -- DUEÑO >>>>>>
 	@FXML
 	private TextField txtNombreDuenio, txtTelefono, txtEmail;
 	@FXML
 	private TextArea txtDireccion;
 
-	// -- OPCIONES DEL COMBOBOX -->
+	// -- OPCIONES COMBOBOX >>>>>>
 	@FXML
 	private void initialize() {
-		cmbSexo.getItems().addAll("Macho", "Hembra");
-		cmbEsterilizado.getItems().addAll("Si", "No");
+		cmbSexo.getItems().addAll("MACHO", "HEMBRA");
+		cmbEsterilizado.getItems().addAll("SI", "NO");
 	}
 
-	// -- FORMATO EMAIL -->
+	// -- FORMATO EMAIL >>>>>>
 	@FXML
 	private void validarEmail() {
 		String correo = txtEmail.getText();
-		if (correo.matches("[\\w\\.]+@[\\w\\.]+\\.\\w{2,}")) {
+		if (correo.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
 			System.out.println("Correo electrónico válido");
 		} else {
 			System.out.println("Correo electrónico inválido");
 		}
 	}
 
-	// -- BOTON LIMPIEZA -->
+	// -- BOTON LIMPIEZA >>>>>>
 	public void limpiarDatos(ActionEvent event) {
 		txtNombreMascota.clear();
 		dpFechaNacimiento.setValue(null);
@@ -66,9 +66,10 @@ public class CargaDatosController {
 		txtEmail.clear();
 		txtDireccion.clear();
 		cmbSexo.getSelectionModel().clearSelection();
+		dpUltimaVisita.setValue(null);
 	}
 
-	// -- ALERTAS POR FALTA DE INFO -->
+	// -- ALERTAS POR FALTA DE INFO >>>>>>
 	private void mostrarAlerta(String titulo, String contenido) {
 		Alert alerta = new Alert(Alert.AlertType.WARNING);
 		alerta.setTitle(titulo);
@@ -77,10 +78,11 @@ public class CargaDatosController {
 		alerta.showAndWait();
 	}
 
-	// -- BOTON GUARDAR DATOS -->
+	// -- BOTON GUARDAR DATOS >>>>>>
 	@FXML
 	private void guardarDatos(ActionEvent event) throws IOException {
 
+		// Valida que los campos no esten vacios antes de guardar
 		if (txtNombreDuenio.getText().trim().isEmpty() || txtTelefono.getText().trim().isEmpty()
 				|| txtEmail.getText().trim().isEmpty() || txtDireccion.getText().trim().isEmpty()
 				|| txtNombreMascota.getText().trim().isEmpty() || txtRaza.getText().trim().isEmpty()
@@ -92,6 +94,14 @@ public class CargaDatosController {
 			return;
 		}
 
+		// Valida formato del email
+		String correo = txtEmail.getText().trim();
+		if (!correo.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+			mostrarAlerta("Correo inválido", "Por favor, introduce un correo electrónico válido.");
+			return;
+		}
+
+		// Valida formato del peso
 		double peso;
 		try {
 			peso = Double.parseDouble(txtPesoActual.getText().trim());
@@ -100,32 +110,34 @@ public class CargaDatosController {
 			return;
 		}
 
-		// -- GUARDA INFO EN BD
+		// >> GUARDA INFO EN BD Y OBTIENE ID DE MASCOTA NUEVA
+		Mascota mascota = null; // Declaro mascota fuera del try asi esta disponible para el cambio de interfaz
 		EntityManager em = JPAUtil.getEntityManager();
+
 		try {
 			Duenio duenio = new Duenio();
-			duenio.setNombre(txtNombreDuenio.getText().trim());
+			duenio.setNombre(txtNombreDuenio.getText().toUpperCase().trim());
 			duenio.setTelefono(txtTelefono.getText().trim());
-			duenio.setEmail(txtEmail.getText().trim());
-			duenio.setDireccion(txtDireccion.getText().trim());
+			duenio.setEmail(txtEmail.getText().toUpperCase().trim());
+			duenio.setDireccion(txtDireccion.getText().toUpperCase().trim());
 
-			Mascota mascota = new Mascota();
-			mascota.setNombreMascota(txtNombreMascota.getText().trim());
+			mascota = new Mascota();
+			mascota.setNombreMascota(txtNombreMascota.getText().toUpperCase().trim());
 			mascota.setFechaNacimiento(dpFechaNacimiento.getValue());
-			mascota.setUltimaVisita(dpUltimaVisita.getValue());
 			mascota.setSexo(cmbSexo.getValue());
 			mascota.setEsterilizado(cmbEsterilizado.getValue());
 			String raza = txtRaza.getText();
-			mascota.setRaza((raza != null && !raza.isBlank()) ? raza.trim() : null);
+			mascota.setRaza((raza != null && !raza.isBlank()) ? raza.toUpperCase().trim() : null);
 			String color = txtColor.getText();
-			mascota.setColor((color != null && !color.isBlank()) ? color.trim() : null);
+			mascota.setColor((color != null && !color.isBlank()) ? color.toUpperCase().trim() : null);
 			mascota.setPesoActual(peso);
 			mascota.setUnDuenio(duenio);
 
-			em.getTransaction().begin();
+			em.getTransaction().begin(); // abre la transaccion para sincronizar
 			em.persist(duenio);
 			em.persist(mascota);
-			em.getTransaction().commit();
+			em.flush(); // Sincroniza con BD antes del commit y genera el id de la mascota nueva
+			em.getTransaction().commit(); // Confirma los cambios en BD
 
 			Alert alerta = new Alert(Alert.AlertType.INFORMATION);
 			alerta.setTitle("Registro guardado");
@@ -133,16 +145,38 @@ public class CargaDatosController {
 			alerta.setContentText("Los datos se han guardado correctamente.");
 			alerta.showAndWait();
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			mostrarAlerta("Error", "No se pudo guardar la mascota.");
+			return;
 		} finally {
 			em.close();
 		}
 
+		// >> CAMBIA DE INTERFAZ
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FichaMascota.fxml"));
+			Parent root = loader.load();
+			FichaMascotaController controller = loader.getController(); // Obtengo el controlador de la nueva escena
+			controller.cargarDatos(mascota.getIdMascota()); // Paso el ID de la mascota recién creada
+			Scene scene = new Scene(root);
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.setTitle("Ficha Mascota");
+			stage.setScene(scene);
+			stage.setResizable(false);
+			stage.setOnCloseRequest(evt -> evt.consume());
+			stage.show();
+			stage.centerOnScreen();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
-	// -- BOTON SALIR -->
+	// -- BOTON SALIR >>>>>>
 	public void salirNuevaMascota(ActionEvent event) {
 
-		// -- CAMBIA DE INTERFAZ
+		// >> CAMBIA DE INTERFAZ
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/View/Principal.fxml"));
 			Scene scene = new Scene(root);

@@ -2,14 +2,17 @@ package Controller;
 
 import javax.persistence.EntityManager;
 
+import Model.Duenio;
 import Model.JPAUtil;
 import Model.Mascota;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -20,27 +23,27 @@ public class ActualizarFichaController {
 
 	private int idMascotaActual;
 
-	// -- MASCOTA -->
+	// -- MASCOTA >>>>>
 	@FXML
-	private TextField txtNombreMascota, txtRaza, txtColor, txtAlergia, txtMedicacion, txtCirugia, txtPesoActual;
+	private TextField txtNombreMascota, txtRaza, txtColor, txtAlergia, txtMedicacion, txtCirugia, txtPesoActual,
+			txtObservaciones;
 	@FXML
 	private DatePicker dpFechaNacimiento, dpUltimaVisita;
 	@FXML
 	private ComboBox<String> cmbSexo, cmbEsterilizado;
 
-	// -- DUEÑO -->
+	// -- DUEÑO >>>>>
 	@FXML
-	private TextField txtNombreDuenio, txtTelefono, txtEmail;
-	@FXML
-	private TextArea txtDireccion;
+	private TextField txtNombreDuenio, txtTelefono, txtEmail, txtDireccion;
 
 	// -- OPCIONES DEL COMBOBOX -->
 	@FXML
 	public void initialize() {
-		cmbSexo.getItems().addAll("Macho", "Hembra");
-		cmbEsterilizado.getItems().addAll("Si", "No");
+		cmbSexo.getItems().addAll("MACHO", "HEMBRA");
+		cmbEsterilizado.getItems().addAll("SI", "NO");
 	}
 
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public void cargarDatos(int idMascota) {
 		this.idMascotaActual = idMascota;
 
@@ -51,7 +54,6 @@ public class ActualizarFichaController {
 			txtNombreMascota.setText(mascota.getNombreMascota());
 
 			dpFechaNacimiento.setValue(mascota.getFechaNacimiento());
-			dpUltimaVisita.setValue(mascota.getUltimaVisita());
 
 			cmbSexo.setValue(mascota.getSexo());
 			txtRaza.setText(mascota.getRaza());
@@ -61,6 +63,7 @@ public class ActualizarFichaController {
 			txtMedicacion.setText(mascota.getMedicacion());
 			txtCirugia.setText(mascota.getCirugia());
 			txtPesoActual.setText(mascota.getPesoActual() != null ? mascota.getPesoActual().toString() : "");
+			txtObservaciones.setText(mascota.getObservaciones());
 
 			txtNombreDuenio.setText(mascota.getUnDuenio().getNombre());
 			txtTelefono.setText(mascota.getUnDuenio().getTelefono());
@@ -71,74 +74,117 @@ public class ActualizarFichaController {
 		em.close();
 	}
 
+	// verrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+	private boolean isEmpty(TextField field) {
+		return field == null || field.getText() == null || field.getText().trim().isEmpty();
+	}
+
+	// -- BOTON ACTUALIZAR >>>>>>
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	@FXML
 	public void actualizarFicha(ActionEvent event) {
-		EntityManager em = JPAUtil.getEntityManager();
+		((Node) event.getSource()).getScene().getRoot().requestFocus();
 
+		if (isEmpty(txtNombreMascota) || dpFechaNacimiento.getValue() == null || cmbSexo.getValue() == null
+				|| isEmpty(txtRaza) || isEmpty(txtColor) || // Línea 89 probablemente
+				cmbEsterilizado.getValue() == null || isEmpty(txtAlergia) || isEmpty(txtMedicacion)
+				|| isEmpty(txtCirugia) || isEmpty(txtObservaciones) || isEmpty(txtPesoActual)
+				|| isEmpty(txtNombreDuenio) || isEmpty(txtTelefono) || isEmpty(txtEmail) || isEmpty(txtDireccion)) {
+
+			Alert alerta = new Alert(Alert.AlertType.ERROR);
+			alerta.setTitle("Campos incompletos");
+			alerta.setHeaderText(null);
+			alerta.setContentText("Por favor, rellena todos los campos obligatorios antes de continuar.");
+			alerta.showAndWait();
+			return;
+		}
+
+		// Validación email
+		if (!esEmailValido(txtEmail.getText().trim())) {
+			Alert alerta = new Alert(Alert.AlertType.ERROR);
+			alerta.setTitle("Email inválido");
+			alerta.setHeaderText(null);
+			alerta.setContentText("Por favor, introduce un email con formato válido (ejemplo@dominio.com).");
+			alerta.showAndWait();
+			return;
+		}
+
+		// Validar peso, que no este vacio y sea numerico
+		String pesoTexto = txtPesoActual.getText().trim();
+		if (pesoTexto.isEmpty()) {
+			Alert alerta = new Alert(Alert.AlertType.ERROR);
+			alerta.setTitle("Peso vacío");
+			alerta.setHeaderText(null);
+			alerta.setContentText("Por favor, introduce un peso válido.");
+			alerta.showAndWait();
+			return;
+		} else {
+			try {
+				Double.parseDouble(pesoTexto);
+			} catch (NumberFormatException ex) {
+				Alert alerta = new Alert(Alert.AlertType.ERROR);
+				alerta.setTitle("Peso inválido");
+				alerta.setHeaderText(null);
+				alerta.setContentText("El peso introducido no es un número válido.");
+				alerta.showAndWait();
+				return;
+			}
+		}
+
+		EntityManager em = JPAUtil.getEntityManager();
 		try {
 			em.getTransaction().begin();
 
-			// BUSCA LA MASCOTA EN BD
 			Mascota mascota = em.find(Mascota.class, idMascotaActual);
-
-			if (mascota != null) {
-				
-				// ACTUALIZA LOS VALORES DE BD
-				if (dpFechaNacimiento.getValue() != null) {
-					mascota.setFechaNacimiento(dpFechaNacimiento.getValue());
-				}
-				if (dpUltimaVisita.getValue() != null) {
-					mascota.setUltimaVisita(dpUltimaVisita.getValue());
-				}
-				if (cmbSexo.getValue() != null && !cmbSexo.getValue().trim().isEmpty()) {
-					mascota.setSexo(cmbSexo.getValue());
-				}
-				if (!txtRaza.getText().trim().isEmpty()) {
-					mascota.setRaza(txtRaza.getText());
-				}
-				if (!txtColor.getText().trim().isEmpty()) {
-					mascota.setColor(txtColor.getText());
-				}
-				if (cmbEsterilizado.getValue() != null && !cmbEsterilizado.getValue().trim().isEmpty()) {
-					mascota.setEsterilizado(cmbEsterilizado.getValue());
-				}
-				if (!txtAlergia.getText().trim().isEmpty()) {
-					mascota.setAlergia(txtAlergia.getText());
-				}
-				if (!txtMedicacion.getText().trim().isEmpty()) {
-					mascota.setMedicacion(txtMedicacion.getText());
-				}
-				if (!txtCirugia.getText().trim().isEmpty()) {
-					mascota.setCirugia(txtCirugia.getText());
-				}
-				if (!txtPesoActual.getText().trim().isEmpty()) {
-					try {
-						mascota.setPesoActual(Double.parseDouble(txtPesoActual.getText()));
-					} catch (NumberFormatException ex) {
-						System.out.println("Peso inválido: " + txtPesoActual.getText());
-					}
-				}
-
-				// GUARDA LOS CAMBIOS EN BD
-				em.merge(mascota);
-				em.getTransaction().commit();
+			if (mascota == null) {
+				em.getTransaction().rollback();
+				return;
 			}
 
-			// -- CAMBIA DE INTERFAZ
+			// Actualizar datos mascota
+			mascota.setNombreMascota(txtNombreMascota.getText().trim().toUpperCase());
+			mascota.setFechaNacimiento(dpFechaNacimiento.getValue());
+			mascota.setSexo(cmbSexo.getValue());
+			mascota.setRaza(txtRaza.getText().trim().toUpperCase());
+			mascota.setColor(txtColor.getText().trim().toUpperCase());
+			mascota.setEsterilizado(cmbEsterilizado.getValue());
+			mascota.setAlergia(txtAlergia.getText().trim().toUpperCase());
+			mascota.setMedicacion(txtMedicacion.getText().trim().toUpperCase());
+			mascota.setCirugia(txtCirugia.getText().trim().toUpperCase());
+			mascota.setObservaciones(txtObservaciones.getText().trim().toUpperCase());
+
+			if (!pesoTexto.isEmpty()) {
+				mascota.setPesoActual(Double.parseDouble(pesoTexto));
+			} else {
+				mascota.setPesoActual(null);
+			}
+
+			// Actualizar datos dueño
+			if (mascota.getUnDuenio() != null) {
+				Duenio duenio = mascota.getUnDuenio();
+
+				duenio.setNombre(txtNombreDuenio.getText().trim().toUpperCase());
+				duenio.setTelefono(txtTelefono.getText().trim());
+				duenio.setEmail(txtEmail.getText().trim().toLowerCase());
+				duenio.setDireccion(txtDireccion.getText().trim().toUpperCase());
+			}
+
+			em.merge(mascota);
+			em.getTransaction().commit();
+
+			// >> CAMBIA DE INTERFAZ
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FichaMascota.fxml"));
 			Parent root = loader.load();
 
 			FichaMascotaController fichaController = loader.getController();
-			fichaController.cargarDatos(idMascotaActual);
+			fichaController.setIdMascota(idMascotaActual);
 
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			stage.setScene(new Scene(root));
 			stage.setTitle("Ficha Mascota");
 			stage.setResizable(false);
 			stage.centerOnScreen();
-			stage.setOnCloseRequest(evt -> evt.consume());
 			stage.show();
-			stage.centerOnScreen();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,6 +193,39 @@ public class ActualizarFichaController {
 			}
 		} finally {
 			em.close();
+		}
+	}
+
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	private boolean esEmailValido(String email) {
+		if (email == null || email.isEmpty())
+			return false;
+		return email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
+	}
+
+	// -- BOTON SALIR -->
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	@FXML
+	public void salirActualizar(ActionEvent event) {
+		try {
+			// Cargar el FXML
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FichaMascota.fxml"));
+			Parent root = loader.load();
+
+			// Obtener el controlador y pasar el ID de la mascota
+			FichaMascotaController fichaController = loader.getController();
+			fichaController.cargarDatos(idMascotaActual);
+
+			// Mostrar la escena
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.setTitle("Ficha Mascota");
+			stage.setScene(new Scene(root));
+			stage.setResizable(false);
+			stage.setOnCloseRequest(evt -> evt.consume());
+			stage.show();
+			stage.centerOnScreen();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,15 +10,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PrincipalController">
    <children>
-      <Pane prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #15aeca;">
+      <Pane prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #4acacd;">
          <children>
-            <Label layoutX="191.0" layoutY="20.0" text="Peluquería Canina" textFill="WHITE">
+            <Label layoutX="191.0" layoutY="20.0" text="Peluquería Canina" textAlignment="CENTER">
                <font>
                   <Font name="Cambria Math" size="28.0" />
                </font>
-               <effect>
-                  <DropShadow />
-               </effect>
             </Label>
          </children>
       </Pane>
@@ -30,7 +26,7 @@
             <Button fx:id="btnSalirPrincipal" layoutX="83.0" layoutY="189.0" mnemonicParsing="false" onAction="#salirPrincipal" prefHeight="42.0" prefWidth="145.0" text="Salir" />
             <ImageView fitHeight="207.0" fitWidth="281.0" layoutX="306.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../bin/PerroDuchaSinFondo3.png" />
+                  <Image url="@../../bin/PerroCorte.png" />
                </image>
             </ImageView>
          </children>

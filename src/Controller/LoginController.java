@@ -9,10 +9,10 @@ import javafx.scene.Node;
 
 public class LoginController {
 
-	// -- BOTON LOGIN -->
+	// -- BOTON LOGIN >>>>>>
 	public void irAPrincipal(ActionEvent event) {
 
-		// -- CAMBIA DE INTERFAZ
+		// >> CAMBIA DE INTERFAZ
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/View/Principal.fxml"));
 			Scene scene = new Scene(root);
@@ -27,5 +27,12 @@ public class LoginController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	// -- BOTON SALIR >>>>>>
+	public void salirAplicacion(ActionEvent event) {
+
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		stage.close();
 	}
 }

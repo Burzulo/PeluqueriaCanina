@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConexionBD {
 
-	// -- CONEXION A BD MYSQL-->
+	// -- CONEXION A BD MYSQL >>>>>>
     private static final String URL = "jdbc:mysql://localhost:3306/peluqueria_canina";
     private static final String USUARIO = "root"; 
     private static final String CONTRASENA = ""; 
@@ -22,4 +22,3 @@ public class ConexionBD {
         return conn;
     }
 }
-

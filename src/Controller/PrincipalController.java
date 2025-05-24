@@ -9,10 +9,10 @@ import javafx.stage.Stage;
 
 public class PrincipalController {
 
-	// -- BOTON NUEVA MASCOTA -->
+	// -- BOTON NUEVA MASCOTA >>>>>>
 	public void irNuevaMascota(ActionEvent event) {
 
-		// -- CAMBIA DE INTERFAZ
+		// >> CAMBIA DE INTERFAZ
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/View/CargaDatos.fxml"));
 			Scene scene = new Scene(root);
@@ -29,10 +29,10 @@ public class PrincipalController {
 		}
 	}
 
-	// -- BOTON BUSCAR -->
+	// -- BOTON BUSCAR >>>>>>
 	public void buscarMascota(ActionEvent event) {
 
-		// -- CAMBIA DE INTERFAZ
+		// >> CAMBIA DE INTERFAZ
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/View/BuscarMascota.fxml"));
 			Scene scene = new Scene(root);
@@ -50,10 +50,10 @@ public class PrincipalController {
 		}
 	}
 
-	// -- BOTON SALIR -->
+	// -- BOTON SALIR >>>>>>
 	public void salirPrincipal(ActionEvent event) {
 
-		// -- CAMBIA DE INTERFAZ
+		// >> CAMBIA DE INTERFAZ
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
 			Scene scene = new Scene(root);
@@ -63,8 +63,8 @@ public class PrincipalController {
 			stage.sizeToScene();
 			stage.setResizable(false);
 			if (stage.getOnCloseRequest() != null) {
-	            stage.setOnCloseRequest(null);
-	        }
+				stage.setOnCloseRequest(null);
+			}
 			stage.show();
 			stage.centerOnScreen();
 
