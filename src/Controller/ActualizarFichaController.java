@@ -5,7 +5,6 @@ import javax.persistence.EntityManager;
 import Model.Duenio;
 import Model.JPAUtil;
 import Model.Mascota;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -43,7 +41,6 @@ public class ActualizarFichaController {
 		cmbEsterilizado.getItems().addAll("SI", "NO");
 	}
 
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public void cargarDatos(int idMascota) {
 		this.idMascotaActual = idMascota;
 
@@ -74,21 +71,19 @@ public class ActualizarFichaController {
 		em.close();
 	}
 
-	// verrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+	// Metodo para validar que del campo
 	private boolean isEmpty(TextField field) {
 		return field == null || field.getText() == null || field.getText().trim().isEmpty();
 	}
 
 	// -- BOTON ACTUALIZAR >>>>>>
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	@FXML
 	public void actualizarFicha(ActionEvent event) {
 		((Node) event.getSource()).getScene().getRoot().requestFocus();
 
 		if (isEmpty(txtNombreMascota) || dpFechaNacimiento.getValue() == null || cmbSexo.getValue() == null
-				|| isEmpty(txtRaza) || isEmpty(txtColor) || // Línea 89 probablemente
-				cmbEsterilizado.getValue() == null || isEmpty(txtAlergia) || isEmpty(txtMedicacion)
-				|| isEmpty(txtCirugia) || isEmpty(txtObservaciones) || isEmpty(txtPesoActual)
+				|| isEmpty(txtRaza) || isEmpty(txtColor) || cmbEsterilizado.getValue() == null || isEmpty(txtAlergia)
+				|| isEmpty(txtMedicacion) || isEmpty(txtCirugia) || isEmpty(txtObservaciones) || isEmpty(txtPesoActual)
 				|| isEmpty(txtNombreDuenio) || isEmpty(txtTelefono) || isEmpty(txtEmail) || isEmpty(txtDireccion)) {
 
 			Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -99,7 +94,7 @@ public class ActualizarFichaController {
 			return;
 		}
 
-		// Validación email
+		// Alerta para la validación del email
 		if (!esEmailValido(txtEmail.getText().trim())) {
 			Alert alerta = new Alert(Alert.AlertType.ERROR);
 			alerta.setTitle("Email inválido");
@@ -109,7 +104,7 @@ public class ActualizarFichaController {
 			return;
 		}
 
-		// Validar peso, que no este vacio y sea numerico
+		// Alerta para la validación del peso
 		String pesoTexto = txtPesoActual.getText().trim();
 		if (pesoTexto.isEmpty()) {
 			Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -141,7 +136,7 @@ public class ActualizarFichaController {
 				return;
 			}
 
-			// Actualizar datos mascota
+			// Actualizacion de los datos de la mascota y dueño
 			mascota.setNombreMascota(txtNombreMascota.getText().trim().toUpperCase());
 			mascota.setFechaNacimiento(dpFechaNacimiento.getValue());
 			mascota.setSexo(cmbSexo.getValue());
@@ -159,7 +154,6 @@ public class ActualizarFichaController {
 				mascota.setPesoActual(null);
 			}
 
-			// Actualizar datos dueño
 			if (mascota.getUnDuenio() != null) {
 				Duenio duenio = mascota.getUnDuenio();
 
@@ -196,27 +190,23 @@ public class ActualizarFichaController {
 		}
 	}
 
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// Metodo para validar el formato del email
 	private boolean esEmailValido(String email) {
 		if (email == null || email.isEmpty())
 			return false;
 		return email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
 	}
 
-	// -- BOTON SALIR -->
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// -- BOTON SALIR >>>>>
 	@FXML
 	public void salirActualizar(ActionEvent event) {
 		try {
-			// Cargar el FXML
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FichaMascota.fxml"));
 			Parent root = loader.load();
 
-			// Obtener el controlador y pasar el ID de la mascota
 			FichaMascotaController fichaController = loader.getController();
 			fichaController.cargarDatos(idMascotaActual);
 
-			// Mostrar la escena
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			stage.setTitle("Ficha Mascota");
 			stage.setScene(new Scene(root));
